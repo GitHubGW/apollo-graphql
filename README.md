@@ -1,4 +1,4 @@
-# Apollo-GraphQL-Course
+# Apollo-GraphQL
 
 ## 🔗 Demo
 
