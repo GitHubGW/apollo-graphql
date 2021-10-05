@@ -1,7 +1,64 @@
+import { gql, useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Movie = () => {
-  return <></>;
+const Container = styled.div`
+  margin-bottom: 35px;
+  transition: 0.5s;
+  &:hover {
+    transform: scale(1.03);
+  }
+`;
+
+const SCLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const Image = styled.img`
+  vertical-align: top;
+  width: 100%;
+  border-radius: 10px;
+`;
+
+const MovieContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+`;
+
+const Title = styled.h1`
+  color: black;
+  font-size: 28px;
+  text-align: center;
+`;
+
+const Rating = styled.h2`
+  color: orange;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 22px;
+`;
+
+const LikeButton = styled.button`
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 40px;
+`;
+
+const Movie = ({ id, medium_cover_image, title, description_full, rating, isLiked }) => {
+  return (
+    <Container>
+      <SCLink to={`/${id}`}>
+        <Image src={medium_cover_image && medium_cover_image} alt={title} />
+        <MovieContent>
+          <Title>{title && title}</Title>
+          <Rating>⭐️ {rating && rating}</Rating>
+        </MovieContent>
+      </SCLink>
+      {/* <LikeButton onClick={toggleLikeMovie}>{isLiked ? "❤️‍🔥" : "💔"}</LikeButton> */}
+    </Container>
+  );
 };
 
 export default Movie;
