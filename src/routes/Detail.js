@@ -11,11 +11,12 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  border: 2px solid white;
+  border: 3px solid white;
   display: flex;
   padding: 30px;
   width: 900px;
   max-width: 900px;
+  border-radius: 5px;
 `;
 
 const ImageContainer = styled.div`
@@ -67,10 +68,24 @@ const GET_MOVIE = gql`
   }
 `;
 
+const GET_MOVIE_RATING = gql`
+  query getMovieByRating($rating: Int!) {
+    moviesByRating(rating: $rating) {
+      id
+      title
+      genres
+      description_full
+      year
+      rating
+      medium_cover_image
+    }
+  }
+`;
+
 const Detail = () => {
   const { id } = useParams();
   const { data, loading, error } = useQuery(GET_MOVIE, { variables: { id: +id } });
-  console.log(data, loading, error);
+  const { data: ratingData, loading: ratingLoading, error: ratingError } = useQuery(GET_MOVIE_RATING, { variables: { rating: 8 } });
 
   return loading ? (
     <Loading></Loading>
