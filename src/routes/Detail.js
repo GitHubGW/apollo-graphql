@@ -54,6 +54,8 @@ const Desc = styled.p`
   font-size: 30px;
 `;
 
+const Error = styled.h1``;
+
 const GET_MOVIE = gql`
   query getMovieById($id: Int!) {
     movieById(id: $id) {
@@ -64,6 +66,7 @@ const GET_MOVIE = gql`
       year
       rating
       medium_cover_image
+      isLiked @client
     }
   }
 `;
@@ -92,12 +95,13 @@ const Detail = () => {
   ) : (
     <Wrapper>
       <Container>
+        {error && <Error>{error}</Error>}
         <ImageContainer>
           <Image src={data?.movieById?.medium_cover_image} alt={data?.movieById?.title}></Image>
         </ImageContainer>
         <ContentContainer>
           <Title>
-            {data?.movieById?.title} {data?.movieById?.isLiked ? "❤️‍🔥" : "💔"}
+            {data?.movieById?.title} {data?.movieById?.isLiked ? "💖" : "💔"}
           </Title>
           <Genres>
             {data?.movieById?.genres.map((genre, index) => (

@@ -35,14 +35,13 @@ const GET_MOVIES = gql`
       year
       rating
       medium_cover_image
+      isLiked @client
     }
   }
 `;
 
 const Home = () => {
   const { data, loading, error } = useQuery(GET_MOVIES);
-
-  console.log(data);
 
   return (
     <Wrapper>

@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -43,10 +43,34 @@ const LikeButton = styled.button`
   border: none;
   cursor: pointer;
   background-color: transparent;
-  font-size: 40px;
+  font-size: 35px;
+`;
+
+const LIKE_MOVIE = gql`
+  mutation LikeMovie($id: Int!, $isLiked: Boolean!) {
+    likeMovie(id: $id, isLiked: $isLiked) @client
+  }
+`;
+
+const GET_MOVIE = gql`
+  query getMovieById($id: Int!) {
+    movieById(id: $id) {
+      id
+      title
+      genres
+      description_full
+      year
+      rating
+      medium_cover_image
+      isLiked @client
+    }
+  }
 `;
 
 const Movie = ({ id, medium_cover_image, title, description_full, rating, isLiked }) => {
+  const [likeMovie, { data, loading, error }] = useMutation(LIKE_MOVIE, { variables: { id: +id, isLiked } });
+  useQuery(GET_MOVIE, { variables: { id: +id } });
+
   return (
     <Container>
       <SCLink to={`/${id}`}>
@@ -56,7 +80,7 @@ const Movie = ({ id, medium_cover_image, title, description_full, rating, isLike
           <Rating>⭐️ {rating && rating}</Rating>
         </MovieContent>
       </SCLink>
-      {/* <LikeButton onClick={toggleLikeMovie}>{isLiked ? "❤️‍🔥" : "💔"}</LikeButton> */}
+      <LikeButton onClick={likeMovie}>{isLiked ? "💖" : "💔"}</LikeButton>
     </Container>
   );
 };
