@@ -1,4 +1,4 @@
-# Apollo-GraphQL
+# GraphQL-Movie-Frontend
 
 ## 🔗 Demo
 
